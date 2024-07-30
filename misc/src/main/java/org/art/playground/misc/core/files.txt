@@ -1,0 +1,15 @@
+SUM 420G
+find . -maxdepth 1 -mindepth 1 -type d -exec du -hs {} \;
+
+1.3G	./playtika
+3.8G	./PhpstormProjects
+ 90G	./Library
+404M	./.minikube
+7.2G	./PycharmProjects
+1.8G	./.gradle
+ 18G	./dev
+1.9G	./IdeaProjects
+119G	./Documents
+ 17G	./.m2
+2.0G	./Downloads
+157G	./MyDocs
