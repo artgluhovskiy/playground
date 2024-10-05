@@ -20,6 +20,14 @@ import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
 /*
+    Additional data:
+    JEP: https://openjdk.org/jeps/438
+    Playlist: https://www.youtube.com/@tilir/playlists
+    SIMD: https://www.youtube.com/results?search_query=%D0%BA%D0%BE%D0%BD%D1%81%D1%82%D0%B0%D0%BD%D1%82%D0%B8%D0%BD+%D0%B2%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D0%BE%D0%B2+simd
+    CMD: sysctl -a | grep machdep.cpu | grep AVX
+ */
+
+/*
     Benchmark                           Mode  Cnt     Score   Error  Units
     ArraysBenchmark.findInArray_scalar  avgt    2  6277.206          ns/op
     ArraysBenchmark.findInArray_vector  avgt    2  2962.806          ns/op
