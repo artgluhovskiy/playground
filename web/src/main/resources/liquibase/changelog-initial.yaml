@@ -1,6 +1,13 @@
 databaseChangeLog:
   - changeSet:
-      id: create-table-user
+      id: create-table-company
+      author: art
+      changes:
+        - sqlFile:
+            path: tables/company.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: create-table-employee
       author: art
       changes:
         - sqlFile:
