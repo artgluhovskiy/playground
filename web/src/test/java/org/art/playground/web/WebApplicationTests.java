@@ -1,5 +1,6 @@
 package org.art.playground.web;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import cz.jirutka.rsql.parser.RSQLParser;
 import cz.jirutka.rsql.parser.ast.Node;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @SpringBootTest
 class WebApplicationTests {
 
@@ -19,15 +21,62 @@ class WebApplicationTests {
     private EmployeeRepository repository;
 
     @Test
-    @Transactional
-    void shouldFindEmployees() {
-        String query = "((firstName!=John;lastName!=Brown),(lastName==Brown))";
+    void shouldFindEmployeesV1() {
+        String query = "lastName==Brown";
         Node rootNode = new RSQLParser().parse(query);
         Specification<Employee> spec = rootNode.accept(new CustomRsqlVisitor<>());
-        List<Employee> all = repository.findAll(spec);
+        List<Employee> employees = repository.findAll(spec);
 
-//        List<Employee> all = repository.findAll();
-        System.out.println(all);
+        assertThat(employees).hasSize(1)
+            .anySatisfy(employee -> assertThat(employee.getLastName()).isEqualTo("Brown"));
+    }
+
+    @Test
+    void shouldFindEmployeesV2() {
+        String query = "firstName!=John;lastName!=Brown";
+        Node rootNode = new RSQLParser().parse(query);
+        Specification<Employee> spec = rootNode.accept(new CustomRsqlVisitor<>());
+        List<Employee> employees = repository.findAll(spec);
+
+        assertThat(employees).hasSize(1)
+            .anySatisfy(employee -> assertThat(employee.getFirstName()).isEqualTo("Larry"));
+    }
+
+    @Test
+    void shouldFindEmployeesV3() {
+        String query = "firstName==John,lastName==Smith";
+        Node rootNode = new RSQLParser().parse(query);
+        Specification<Employee> spec = rootNode.accept(new CustomRsqlVisitor<>());
+        List<Employee> employees = repository.findAll(spec);
+
+        assertThat(employees).hasSize(2)
+            .anySatisfy(employee -> assertThat(employee.getFirstName()).isEqualTo("John"))
+            .anySatisfy(employee -> assertThat(employee.getLastName()).isEqualTo("Smith"));
+    }
+
+    @Test
+//    TODO: Check
+    void shouldFindEmployeesV4() {
+        String query = "(firstName!=John;lastName!=Brown),(lastName==Brown)";
+        Node rootNode = new RSQLParser().parse(query);
+        Specification<Employee> spec = rootNode.accept(new CustomRsqlVisitor<>());
+        List<Employee> employees = repository.findAll(spec);
+
+        assertThat(employees).hasSize(2)
+            .anySatisfy(employee -> assertThat(employee.getFirstName()).isEqualTo("Harry"))
+            .anySatisfy(employee -> assertThat(employee.getLastName()).isEqualTo("Brown"));
+    }
+
+    @Test
+    void shouldFindEmployeesV5() {
+        String query = "firstName=in=(John,Harry)";
+        Node rootNode = new RSQLParser().parse(query);
+        Specification<Employee> spec = rootNode.accept(new CustomRsqlVisitor<>());
+        List<Employee> employees = repository.findAll(spec);
+
+        assertThat(employees).hasSize(2)
+            .anySatisfy(employee -> assertThat(employee.getFirstName()).isEqualTo("John"))
+            .anySatisfy(employee -> assertThat(employee.getFirstName()).isEqualTo("Harry"));
     }
 
 }

@@ -13,3 +13,5 @@ INSERT INTO employee (first_name, last_name, company_id)
 VALUES ('John', 'Doe', 1);
 INSERT INTO employee (first_name, last_name, company_id)
 VALUES ('Harry', 'Brown', 2);
+INSERT INTO employee (first_name, last_name, company_id)
+VALUES ('Larry', 'Smith', 2);
