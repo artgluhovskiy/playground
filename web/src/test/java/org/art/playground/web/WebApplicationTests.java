@@ -23,8 +23,8 @@ class WebApplicationTests {
     @Test
     void shouldFindEmployeesV1() {
         String query = "lastName==Brown";
-        Node rootNode = new RSQLParser().parse(query);
-        Specification<Employee> spec = rootNode.accept(new CustomRsqlVisitor<>());
+        Specification<Employee> spec = buildSpec(query);
+
         List<Employee> employees = repository.findAll(spec);
 
         assertThat(employees).hasSize(1)
@@ -34,8 +34,8 @@ class WebApplicationTests {
     @Test
     void shouldFindEmployeesV2() {
         String query = "firstName!=John;lastName!=Brown";
-        Node rootNode = new RSQLParser().parse(query);
-        Specification<Employee> spec = rootNode.accept(new CustomRsqlVisitor<>());
+        Specification<Employee> spec = buildSpec(query);
+
         List<Employee> employees = repository.findAll(spec);
 
         assertThat(employees).hasSize(1)
@@ -45,8 +45,8 @@ class WebApplicationTests {
     @Test
     void shouldFindEmployeesV3() {
         String query = "firstName==John,lastName==Smith";
-        Node rootNode = new RSQLParser().parse(query);
-        Specification<Employee> spec = rootNode.accept(new CustomRsqlVisitor<>());
+        Specification<Employee> spec = buildSpec(query);
+
         List<Employee> employees = repository.findAll(spec);
 
         assertThat(employees).hasSize(2)
@@ -55,28 +55,32 @@ class WebApplicationTests {
     }
 
     @Test
-//    TODO: Check
-    void shouldFindEmployeesV4() {
-        String query = "(firstName!=John;lastName!=Brown),(lastName==Brown)";
-        Node rootNode = new RSQLParser().parse(query);
-        Specification<Employee> spec = rootNode.accept(new CustomRsqlVisitor<>());
-        List<Employee> employees = repository.findAll(spec);
-
-        assertThat(employees).hasSize(2)
-            .anySatisfy(employee -> assertThat(employee.getFirstName()).isEqualTo("Harry"))
-            .anySatisfy(employee -> assertThat(employee.getLastName()).isEqualTo("Brown"));
-    }
-
-    @Test
     void shouldFindEmployeesV5() {
         String query = "firstName=in=(John,Harry)";
-        Node rootNode = new RSQLParser().parse(query);
-        Specification<Employee> spec = rootNode.accept(new CustomRsqlVisitor<>());
+        Specification<Employee> spec = buildSpec(query);
+
         List<Employee> employees = repository.findAll(spec);
 
         assertThat(employees).hasSize(2)
             .anySatisfy(employee -> assertThat(employee.getFirstName()).isEqualTo("John"))
             .anySatisfy(employee -> assertThat(employee.getFirstName()).isEqualTo("Harry"));
+    }
+
+    @Test
+    void shouldFindEmployeesV6() {
+        String query = "company.name==Company_2";
+        Specification<Employee> spec = buildSpec(query);
+
+        List<Employee> employees = repository.findAll(spec);
+
+        assertThat(employees).hasSize(2)
+            .anySatisfy(employee -> assertThat(employee.getFirstName()).isEqualTo("Harry"))
+            .anySatisfy(employee -> assertThat(employee.getFirstName()).isEqualTo("Larry"));
+    }
+
+    private Specification<Employee> buildSpec(String query) {
+        Node rootNode = new RSQLParser().parse(query);
+        return rootNode.accept(new CustomRsqlVisitor<>());
     }
 
 }

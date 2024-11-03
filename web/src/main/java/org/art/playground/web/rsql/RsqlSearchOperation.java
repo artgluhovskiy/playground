@@ -4,6 +4,7 @@ import cz.jirutka.rsql.parser.ast.ComparisonOperator;
 import cz.jirutka.rsql.parser.ast.RSQLOperators;
 import lombok.Getter;
 
+@Getter
 public enum RsqlSearchOperation {
 
     EQUAL(RSQLOperators.EQUAL),
@@ -15,8 +16,7 @@ public enum RsqlSearchOperation {
     IN(RSQLOperators.IN),
     NOT_IN(RSQLOperators.NOT_IN);
 
-    @Getter
-    private ComparisonOperator operator;
+    private final ComparisonOperator operator;
 
     RsqlSearchOperation(ComparisonOperator operator) {
         this.operator = operator;
@@ -28,6 +28,6 @@ public enum RsqlSearchOperation {
                 return operation;
             }
         }
-        return null;
+        throw new IllegalArgumentException("Unknown operator: %s".formatted(operator));
     }
 }
