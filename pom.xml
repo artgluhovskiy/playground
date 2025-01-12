@@ -22,7 +22,6 @@
         <commons-lang3.version>3.7</commons-lang3.version>
         <guava.version>24.0-jre</guava.version>
         <lombok.version>1.18.32</lombok.version>
-        <logback-classic.version>1.1.7</logback-classic.version>
         <slf4j-api.version>2.0.7</slf4j-api.version>
         <selenium.version>4.19.1</selenium.version>
         <jmh.version>1.37</jmh.version>
@@ -35,6 +34,9 @@
         <assertj-core.version>3.25.3</assertj-core.version>
 
         <commons-collections4.version>4.4</commons-collections4.version>
+        <reactor-core.version>${reactor-test.version}</reactor-core.version>
+        <reactor-test.version>3.7.0</reactor-test.version>
+        <logback.version>1.5.12</logback.version>
     </properties>
     <build>
         <plugins>
@@ -74,7 +76,13 @@
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>${logback-classic.version}</version>
+                <version>${logback.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${logback.version}</version>
             </dependency>
 
             <dependency>
@@ -93,6 +101,18 @@
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${commons-io.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-core</artifactId>
+                <version>${reactor-core.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-test</artifactId>
+                <version>${reactor-test.version}</version>
             </dependency>
 
             <dependency>
