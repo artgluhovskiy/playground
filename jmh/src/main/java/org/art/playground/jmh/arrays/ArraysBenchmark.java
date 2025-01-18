@@ -32,6 +32,7 @@ import org.openjdk.jmh.infra.Blackhole;
     ArraysBenchmark.findInArray_scalar  avgt    2  6277.206          ns/op
     ArraysBenchmark.findInArray_vector  avgt    2  2962.806          ns/op
  */
+
 /*
     java -jar target/benchmarks.jar -jvmArgsAppend --add-modules=jdk.incubator.vector org.art.playground.jmh.arrays.ArraysBenchmark
  */
@@ -41,14 +42,14 @@ import org.openjdk.jmh.infra.Blackhole;
     "-XX:+UseSuperWord",
 })
 @Warmup(iterations = 1, time = 10)
-@Measurement(iterations = 2, time = 10)
+@Measurement(iterations = 3, time = 10)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 public class ArraysBenchmark {
 
     private static final ThreadLocalRandom TLR = ThreadLocalRandom.current();
 
-    private static final int ARR_SIZE = 8 << 13;
+    private static final int ARR_SIZE = 2 << 13;
 
     @Data
     @State(Scope.Thread)
