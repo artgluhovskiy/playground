@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * return all the possible permutations.
  * You can return the answer in any order.
  */
-public class m_2_Permutations {
+public class m_3_Permutations {
 
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
