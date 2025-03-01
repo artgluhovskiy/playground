@@ -1,8 +1,5 @@
 package org.art.playground.jmh.arrays;
 
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
-
 import lombok.Data;
 import lombok.SneakyThrows;
 import org.art.playground.jmh.utils.ArrayUtils;
@@ -19,21 +16,21 @@ import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+
 /*
+    Benchmark                             Mode  Cnt       Score       Error  Units
+    ArraysBenchmark.findInArray_scalar    avgt    3  322918.622 ± 19350.211  ns/op
+    ArraysBenchmark.findInArray_parallel  avgt    3  178540.271 ± 15667.190  ns/op
+    ArraysBenchmark.findInArray_vector    avgt    3  135383.961 ±  6248.461  ns/op
+
     Additional data:
     JEP: https://openjdk.org/jeps/438
     Playlist: https://www.youtube.com/@tilir/playlists
     SIMD: https://www.youtube.com/results?search_query=%D0%BA%D0%BE%D0%BD%D1%81%D1%82%D0%B0%D0%BD%D1%82%D0%B8%D0%BD+%D0%B2%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D0%BE%D0%B2+simd
     CMD: sysctl -a | grep machdep.cpu | grep AVX
- */
 
-/*
-    Benchmark                           Mode  Cnt     Score   Error  Units
-    ArraysBenchmark.findInArray_scalar  avgt    2  6277.206          ns/op
-    ArraysBenchmark.findInArray_vector  avgt    2  2962.806          ns/op
- */
-
-/*
     java -jar target/benchmarks.jar -jvmArgsAppend --add-modules=jdk.incubator.vector org.art.playground.jmh.arrays.ArraysBenchmark
  */
 @Fork(value = 1, jvmArgsPrepend = {
@@ -49,7 +46,7 @@ public class ArraysBenchmark {
 
     private static final ThreadLocalRandom TLR = ThreadLocalRandom.current();
 
-    private static final int ARR_SIZE = 2 << 13;
+    private static final int ARR_SIZE = 2 << 20;
 
     @Data
     @State(Scope.Thread)
@@ -59,30 +56,24 @@ public class ArraysBenchmark {
 
         private ArrayOps_Vector opsVector = new ArrayOps_Vector();
 
+        private ArrayOps_Parallel opsParallel = new ArrayOps_Parallel();
+
         int value;
 
-        int[] arr1;
-
-        int[] arr2;
-
-        int[][] arrSquare1;
-
-        int[][] arrSquare2;
+        int[] arr;
 
         @SneakyThrows
         @Setup(Level.Invocation)
         public void setup() {
             value = TLR.nextInt();
-            arr1 = ArrayUtils.generateRandomArray(ARR_SIZE);
-            arr2 = ArrayUtils.generateRandomArray(ARR_SIZE);
-            arrSquare1 = ArrayUtils.generateRandomMatrix(ARR_SIZE);
-            arrSquare2 = ArrayUtils.generateRandomMatrix(ARR_SIZE);
+
+            arr = ArrayUtils.generateRandomArray(ARR_SIZE);
         }
     }
 
     @Benchmark
     public void findInArray_scalar(BenchmarkState state, Blackhole blackhole) {
-        int[] arr = state.arr1;
+        int[] arr = state.arr;
         int value = state.value;
         int result = state.opsScalar.find(arr, value);
         blackhole.consume(result);
@@ -90,49 +81,17 @@ public class ArraysBenchmark {
 
     @Benchmark
     public void findInArray_vector(BenchmarkState state, Blackhole blackhole) {
-        int[] arr = state.arr1;
+        int[] arr = state.arr;
         int value = state.value;
         int result = state.opsVector.find(arr, value);
         blackhole.consume(result);
     }
 
-
-
-
-
-
-    /* ------------- */
-
-    //    @Benchmark
-    public void addArrays_scalar(BenchmarkState state, Blackhole blackhole) {
-        int[] arr1 = state.arr1;
-        int[] arr2 = state.arr2;
-        int[] result = state.opsScalar.add(arr1, arr2);
+    @Benchmark
+    public void findInArray_parallel(BenchmarkState state, Blackhole blackhole) {
+        int[] arr = state.arr;
+        int value = state.value;
+        int result = state.opsParallel.find(arr, value);
         blackhole.consume(result);
     }
-
-    //    @Benchmark
-    public void addArrays_vector(BenchmarkState state, Blackhole blackhole) {
-        int[] arr1 = state.arr1;
-        int[] arr2 = state.arr2;
-        int[] result = state.opsVector.add(arr1, arr2);
-        blackhole.consume(result);
-    }
-
-    //    @Benchmark
-    public void mulArray_scalar(BenchmarkState state, Blackhole blackhole) {
-        int[][] arr1 = state.arrSquare1;
-        int[][] arr2 = state.arrSquare2;
-        int[][] result = state.opsScalar.mulMatrices(arr1, arr2);
-        blackhole.consume(result);
-    }
-
-    //    @Benchmark
-    public void mulArray_vector(BenchmarkState state, Blackhole blackhole) {
-        int[][] arr1 = state.arrSquare1;
-        int[][] arr2 = state.arrSquare2;
-        int[][] result = state.opsVector.mulMatricesV2(arr1, arr2);
-        blackhole.consume(result);
-    }
-
 }

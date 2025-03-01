@@ -21,15 +21,48 @@ public class ArrayOps_Vector {
         return result;
     }
 
-    public int find(int[] arr, int value) {
+    public int find2(int[] arr, int value) {
         int offset = SPECIES.length();
 
         for (int i = 0; i < arr.length; i += offset) {
+
             var underTest = IntVector.fromArray(SPECIES, arr, i);
+
             VectorMask<Integer> mask = underTest.eq(value);
+
             int found = mask.firstTrue();
             if (found < offset) {
                 return found;
+            }
+        }
+
+        return -1;
+    }
+
+    public int find(int[] array, int target) {
+        int length = array.length;
+        int i = 0;
+
+        // Process elements in vectorized chunks
+        while (i <= length - SPECIES.length()) {
+            // Load a vector from the array
+            IntVector vector = IntVector.fromArray(SPECIES, array, i);
+
+            // Compare each element in the vector to the target
+            var mask = vector.compare(VectorOperators.EQ, target);
+
+            // Check if any element matched
+            if (mask.anyTrue()) {
+                return i + mask.firstTrue();  // Return the first matching index
+            }
+
+            i += SPECIES.length(); // Move to the next chunk
+        }
+
+        // Process remaining elements
+        for (; i < length; i++) {
+            if (array[i] == target) {
+                return i;
             }
         }
 
