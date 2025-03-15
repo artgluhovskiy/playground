@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * The word can be constructed from letters of sequentially adjacent cells,
  * where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.
  */
-public class m_4_WordSearch {
+public class m_5_WordSearch {
 
     public boolean exist(char[][] board, String word) {
         boolean[][] visited = new boolean[board.length][board[0].length];
