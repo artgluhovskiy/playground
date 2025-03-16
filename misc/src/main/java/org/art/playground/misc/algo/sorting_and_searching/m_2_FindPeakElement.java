@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * considered to be strictly greater than a neighbor that is outside the array.
  * You must write an algorithm that runs in O(log n) time.
  */
-public class m_3_FindPeakElement {
+public class m_2_FindPeakElement {
 
     public int findPeakElement(int[] nums) {
         return findPeakHelper(0, nums.length - 1, nums);

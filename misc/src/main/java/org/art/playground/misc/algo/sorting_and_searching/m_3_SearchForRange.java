@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * If target is not found in the array, return [-1, -1].
  * You must write an algorithm with O(log n) runtime complexity.
  */
-public class m_4_SearchForRange {
+public class m_3_SearchForRange {
 
     public int[] searchRange(int[] nums, int target) {
         if (nums.length == 0) {

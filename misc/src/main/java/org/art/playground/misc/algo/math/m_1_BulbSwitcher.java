@@ -13,9 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class m_1_BulbSwitcher {
 
-    /**
-     * https://leetcode.com/problems/bulb-switcher/editorial/
-     */
     public int bulbSwitch(int n) {
         return  (int) Math.sqrt(n);
     }
