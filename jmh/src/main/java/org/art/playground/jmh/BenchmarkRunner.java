@@ -11,9 +11,7 @@ public class BenchmarkRunner {
     @SneakyThrows
     public static void main(String[] args) {
         var opt = new OptionsBuilder()
-//            .include(JsonUpdateBenchmark.class.getSimpleName())
-//            .include(ArraysBenchmark.class.getSimpleName())
-            .include(ListBenchmark.class.getSimpleName())
+            .include(ArraysBenchmark.class.getSimpleName())
             .build();
 
         new Runner(opt).run();

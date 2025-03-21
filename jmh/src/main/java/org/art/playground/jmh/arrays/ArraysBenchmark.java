@@ -58,6 +58,8 @@ public class ArraysBenchmark {
 
         private ArrayOps_Parallel opsParallel = new ArrayOps_Parallel();
 
+        private ArrayOps_Hybrid opsHyb = new ArrayOps_Hybrid();
+
         int value;
 
         int[] arr;
@@ -92,6 +94,14 @@ public class ArraysBenchmark {
         int[] arr = state.arr;
         int value = state.value;
         int result = state.opsParallel.find(arr, value);
+        blackhole.consume(result);
+    }
+
+    @Benchmark
+    public void findInArray_hyb(BenchmarkState state, Blackhole blackhole) {
+        int[] arr = state.arr;
+        int value = state.value;
+        int result = state.opsHyb.find(arr, value);
         blackhole.consume(result);
     }
 }
