@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * The large integer does not contain any leading 0's.
  * Increment the large integer by one and return the resulting array of digits.
  */
-public class e_p7_PlusOne {
+public class e_7_PlusOne {
 
     public int[] plusOne(int[] digits) {
         return doPlusOne(digits, digits.length - 1);

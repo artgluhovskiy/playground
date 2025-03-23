@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * one share of the stock at any time. However, you can buy it then immediately sell it on the same day.
  * Find and return the maximum profit you can achieve.
  */
-public class e_p2_BestTimeToBuyAndSellStockII {
+public class e_2_BestTimeToBuyAndSellStockII {
 
     public int maxProfit(int[] prices) {
         if (prices.length == 1) {

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
  * Given an integer array nums and an integer k, return the k most frequent elements.
  * You may return the answer in any order.
  */
-public class e_p13_TopKFrequentElements {
+public class e_13_TopKFrequentElements {
 
     public int[] topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> counts = new HashMap<>();

@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
-public class e_p12_FindMissingObservations {
+public class e_12_FindMissingObservations {
 
     private static final int[] EMPTY = new int[] {};
 

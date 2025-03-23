@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Given an integer array nums, rotate the array to the right by k steps, where k is non-negative.
  * Propose O(1) space solution.
  */
-public class e_p3_RotateArray {
+public class e_3_RotateArray {
 
     public void rotate(int[] nums, int k) {
         // e.g. {1, 2, 3, 4, 5, 6, 7}, k = 3

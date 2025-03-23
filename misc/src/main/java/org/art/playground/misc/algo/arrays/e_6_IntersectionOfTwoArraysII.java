@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Each element in the result must appear as many times as it shows in both arrays
  * and you may return the result in any order.
  */
-public class e_p6_IntersectionOfTwoArraysII {
+public class e_6_IntersectionOfTwoArraysII {
 
     public int[] intersect(int[] nums1, int[] nums2) {
         int[] smaller;

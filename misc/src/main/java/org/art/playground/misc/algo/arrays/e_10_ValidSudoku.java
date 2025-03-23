@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Artsiom Hlukhouski
  * @since 01.06.2024
  */
-public class e_p10_ValidSudoku {
+public class e_10_ValidSudoku {
 
     public boolean isValidSudoku(char[][] board) {
         Map<Integer, Set<Character>> rows = new HashMap<>();

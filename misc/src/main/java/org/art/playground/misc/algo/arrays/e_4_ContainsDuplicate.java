@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Given an integer array nums, return true if any value appears at least twice in the array,
  * and return false if every element is distinct.
  */
-public class e_p4_ContainsDuplicate {
+public class e_4_ContainsDuplicate {
 
     public boolean containsDuplicate(int[] nums) {
         if (nums.length < 2) {

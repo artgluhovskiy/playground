@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * The remaining elements of nums are not important as well as the size of nums.
  * Return k.
  */
-public class e_p1_RemoveDuplicatesFromSortedArray {
+public class e_1_RemoveDuplicatesFromSortedArray {
 
     public int removeDuplicates(int[] nums) {
         if (nums.length < 2) {
