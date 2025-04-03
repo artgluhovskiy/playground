@@ -64,18 +64,30 @@ public class ArraysBenchmark {
 
         int[] arr;
 
+        int[] arrSorted;
+
         @SneakyThrows
         @Setup(Level.Invocation)
         public void setup() {
             value = TLR.nextInt();
 
             arr = ArrayUtils.generateRandomArray(ARR_SIZE);
+
+            arrSorted = ArrayUtils.generateRandomSortedArray(ARR_SIZE);
         }
     }
 
     @Benchmark
     public void findInArray_scalar(BenchmarkState state, Blackhole blackhole) {
         int[] arr = state.arr;
+        int value = state.value;
+        int result = state.opsScalar.find(arr, value);
+        blackhole.consume(result);
+    }
+
+    @Benchmark
+    public void findInArray_scalarSorted(BenchmarkState state, Blackhole blackhole) {
+        int[] arr = state.arrSorted;
         int value = state.value;
         int result = state.opsScalar.find(arr, value);
         blackhole.consume(result);

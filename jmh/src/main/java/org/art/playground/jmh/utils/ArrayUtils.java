@@ -1,5 +1,6 @@
 package org.art.playground.jmh.utils;
 
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 import lombok.experimental.UtilityClass;
@@ -24,6 +25,12 @@ public class ArrayUtils {
         for (int i = 0; i < size; i++) {
             arr[i] = TLR.nextInt();
         }
+        return arr;
+    }
+
+    public static int[] generateRandomSortedArray(int size) {
+        int[] arr = generateRandomArray(size);
+        Arrays.sort(arr);
         return arr;
     }
 
