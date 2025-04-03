@@ -13,6 +13,7 @@
     <modules>
         <module>misc</module>
         <module>jmh</module>
+        <module>web</module>
     </modules>
 
     <properties>

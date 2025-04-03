@@ -23,7 +23,9 @@ class WebApplicationTests {
     @Test
     void shouldFindEmployeesV1() {
         String query = "lastName==Brown";
-        Specification<Employee> spec = buildSpec(query);
+
+        Node rootNode = new RSQLParser().parse(query);
+        Specification<Employee> spec = rootNode.accept(new CustomRsqlVisitor<>());
 
         List<Employee> employees = repository.findAll(spec);
 
