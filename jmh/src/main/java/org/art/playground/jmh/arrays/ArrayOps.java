@@ -11,4 +11,14 @@ public class ArrayOps {
         return -1;
     }
 
+    public long conditionalSum(int[] arr, int upperBound) {
+        long sum = 0;
+        for (int value : arr) {
+            if (value < upperBound) {
+                sum += value;
+            }
+        }
+        return sum;
+    }
+
 }
