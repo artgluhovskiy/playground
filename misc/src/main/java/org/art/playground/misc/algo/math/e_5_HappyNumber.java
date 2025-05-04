@@ -10,6 +10,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class e_5_HappyNumber {
 
     public boolean isHappy(int n) {
+        int slow = n;
+        int fast = n;
+
+        do {
+            slow = sumSquared(slow);
+            fast = sumSquared(sumSquared(fast));
+
+            if (slow == 1 || fast == 1) {
+                return true;
+            }
+
+        } while (slow != fast);
+
+        return false;
+    }
+
+    public boolean isHappyV2(int n) {
         Set<Integer> visited = new HashSet<>();
 
         while (!visited.contains(n)) {
@@ -28,7 +45,7 @@ public class e_5_HappyNumber {
         int sum = 0;
         while (n > 0) {
             int val = n % 10;
-            sum = sum + (int) Math.pow(val, 2);
+            sum = sum + val * val;
             n = n / 10;
         }
         return sum;
