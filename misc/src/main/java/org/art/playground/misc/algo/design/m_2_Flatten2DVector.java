@@ -12,18 +12,12 @@ public class m_2_Flatten2DVector {
     static class Vector2D implements Iterator<Integer> {
 
         private final int[][] v;
-        private int row;
-        private int col;
+
+        private int row = 0;
+        private int col = 0;
 
         public Vector2D(int[][] v) {
             this.v = v;
-            this.row = 0;
-            this.col = 0;
-
-            // Initialize by skipping empty rows at the beginning
-            while (row < v.length && v[row].length == 0) {
-                row++;
-            }
         }
 
         @Override
@@ -34,29 +28,21 @@ public class m_2_Flatten2DVector {
 
             int value = v[row][col];
 
-            // Move to the next position
-            advanceToNextPosition();
+            col++;
 
             return value;
         }
 
         @Override
         public boolean hasNext() {
-            return row < v.length && col < v[row].length;
+            advanceToNextRowIfNeeded();
+            return row < v.length;
         }
 
-        private void advanceToNextPosition() {
-            col++;
-
-            // If we reached the end of the current row, move to next non-empty row
-            if (col >= v[row].length) {
+        private void advanceToNextRowIfNeeded() {
+            while (row < v.length && col == v[row].length) {
                 row++;
                 col = 0;
-
-                // Skip any empty rows
-                while (row < v.length && v[row].length == 0) {
-                    row++;
-                }
             }
         }
     }
