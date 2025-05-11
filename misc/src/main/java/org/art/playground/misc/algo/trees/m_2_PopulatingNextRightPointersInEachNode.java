@@ -42,6 +42,31 @@ public class m_2_PopulatingNextRightPointersInEachNode {
             return null;
         }
 
+        Node cur = root;
+        Node next = root.left;
+
+        while (cur != null && next != null) {
+            cur.left.next = cur.right;
+
+            if (cur.next != null) {
+                cur.right.next = cur.next.left;
+            }
+
+            cur = cur.next;
+            if (cur == null) {
+                cur = next;
+                next = cur.left;
+            }
+        }
+
+        return root;
+    }
+
+    public Node connectSimpleBfs(Node root) {
+        if (root == null) {
+            return null;
+        }
+
         Deque<Node> deque = new LinkedList<>();
         deque.addFirst(root);
 
