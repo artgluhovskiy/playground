@@ -31,5 +31,10 @@ public class UsefulIdioms {
         Map<Integer, Integer> mapWithIntValue = new HashMap<>();
         mapWithIntValue.merge(1, 1, Integer::sum);
 
+        // Idiom 5. ASCI characters
+        short asciCharSize = 122 - 97;              // lowercase English chars ASCII codes
+        int[] asciCharArray = new int[asciCharSize + 1];
+        // occurrences could be stored and calculated in such an array
+
     }
 }
