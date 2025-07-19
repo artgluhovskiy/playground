@@ -36,5 +36,8 @@ public class UsefulIdioms {
         int[] asciCharArray = new int[asciCharSize + 1];
         // occurrences could be stored and calculated in such an array
 
+        // Idiom 6. Encoding the direction in the 2-dim array. E.g. up, right, down, left
+        // Check the problem: m_5_NumberOfIslands
+
     }
 }
