@@ -32,8 +32,11 @@ public class UsefulIdioms {
         mapWithIntValue.merge(1, 1, Integer::sum);
 
         // Idiom 5. ASCI characters
-        short asciCharSize = 122 - 97;              // lowercase English chars ASCII codes
-        int[] asciCharArray = new int[asciCharSize + 1];
+        short asciLowerCaseCharSize = 122 - 97;              // lowercase English chars ASCII codes
+        int[] asciLowerCaseCharArray = new int[asciLowerCaseCharSize + 1];
+
+        short asciUpperCaseCharSize = 90 - 65;              // uppercase English chars ASCII codes
+        int[] asciUpperCaseCharArray = new int[asciUpperCaseCharSize + 1];
         // occurrences could be stored and calculated in such an array
 
         // Idiom 6. Encoding the direction in the 2-dim array. E.g. up, right, down, left
