@@ -42,5 +42,11 @@ public class UsefulIdioms {
         // Idiom 6. Encoding the direction in the 2-dim array. E.g. up, right, down, left
         // Check the problem: m_5_NumberOfIslands
 
+        // Idiom 7. Bit operations
+        // n >> 1 Instead of n / 2
+        // ((n & 1) == 1) Instead of n % 2 == 1
+
+        // Idiom 8. Math.abs on Integer.MIN_VALUE works incorrectly without explicit cast to Long!
+
     }
 }
