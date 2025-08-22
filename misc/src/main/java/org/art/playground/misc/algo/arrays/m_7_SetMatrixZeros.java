@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Given an m x n integer matrix matrix, if an element is 0, set its entire row and column to 0's.
  * You must do it in place.
  */
-public class m_7_setMatrixZeros {
+public class m_7_SetMatrixZeros {
 
     /**
      * Sets entire rows and columns to zero if any element in that row or column is zero.
