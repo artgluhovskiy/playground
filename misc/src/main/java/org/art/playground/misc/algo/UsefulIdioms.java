@@ -39,6 +39,10 @@ public class UsefulIdioms {
         int[] asciUpperCaseCharArray = new int[asciUpperCaseCharSize + 1];
         // occurrences could be stored and calculated in such an array
 
+        // Convert char to int
+        char someChar = '5';
+        int someNumber = someChar - '0'; // num = 5
+
         // Idiom 6. Encoding the direction in the 2-dim array. E.g. up, right, down, left
         // Check the problem: m_5_NumberOfIslands
 

@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Given a string s, return true if the s can be palindrome
  * after deleting at most one character from it.
  */
-public class e_8_ValidPalindrome2 {
+public class e_9_ValidPalindrome2 {
 
     public boolean validPalindrome(String s) {
         if (s.length() < 2) {
