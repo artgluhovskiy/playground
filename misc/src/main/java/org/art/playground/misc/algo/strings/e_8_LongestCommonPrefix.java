@@ -11,16 +11,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class e_8_LongestCommonPrefix {
 
     public String longestCommonPrefix(String[] strs) {
-        String prefix = strs[0];
+        if(strs.length == 1) {
+            return strs[0];
+        }
 
-        for (int i = 1; i < strs.length; i++) {
+        String pref = strs[0];
+
+        for(int i = 1; i < strs.length; i++) {
             String str = strs[i];
-            while (str.indexOf(prefix) != 0) {
-                prefix = prefix.substring(0, prefix.length() - 1);
+            pref = findCommonPref(pref, str);
+        }
+
+        return pref;
+    }
+
+    private String findCommonPref(String s1, String s2) {
+        int idx = 0;
+
+        for(int i = 0; i < Math.min(s1.length(), s2.length()); i++) {
+            if (s1.charAt(i) == s2.charAt(i)) {
+                idx++;
+            } else {
+                break;
             }
         }
 
-        return prefix;
+        return s1.substring(0, idx);
     }
 
     @Test
