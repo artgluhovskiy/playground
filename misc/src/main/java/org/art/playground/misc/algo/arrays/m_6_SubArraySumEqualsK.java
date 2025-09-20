@@ -13,30 +13,46 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class m_6_SubArraySumEqualsK {
 
+    /**
+     * Counts the number of contiguous subarrays whose sum equals k.
+     * Uses prefix sum technique with HashMap for O(n) solution.
+     * <p>
+     * Key insight: If prefix_sum[j] - prefix_sum[i] = k, then subarray[i+1...j] has sum k
+     * Therefore: prefix_sum[i] = prefix_sum[j] - k (we look for this in our map)
+     * <p>
+     * Time Complexity: O(n)
+     * Space Complexity: O(n) for the HashMap
+     */
     public int subarraySum(int[] nums, int k) {
-        int result = 0;
+        int count = 0;
+        int currentSum = 0;
 
-        Map<Integer, Integer> prefixSum = new HashMap<>();
-
-        int sum = 0;
+        // Map to store frequency of prefix sums
+        Map<Integer, Integer> prefixSumFrequency = new HashMap<>();
 
         for (int num : nums) {
-            sum += num;
+            // Update running sum (prefix sum up to current index)
+            currentSum += num;
 
-            if (sum == k) {
-                result++;
+            // Case 1: Subarray from start to current index has sum = k
+            if (currentSum == k) {
+                count++;
             }
 
-            int overhead = sum - k;
+            // Case 2: Check if there exists a previous prefix sum such that
+            // currentSum - previousPrefixSum = k
+            // Which means: previousPrefixSum = currentSum - k
+            int targetPrefixSum = currentSum - k;
 
-            if (prefixSum.containsKey(overhead)) {
-                result += prefixSum.get(overhead);
+            if (prefixSumFrequency.containsKey(targetPrefixSum)) {
+                count += prefixSumFrequency.get(targetPrefixSum);
             }
 
-            prefixSum.merge(sum, 1, Integer::sum);
+            // Store current prefix sum in the map for future references
+            prefixSumFrequency.merge(currentSum, 1, Integer::sum);
         }
 
-        return result;
+        return count;
     }
 
     @Test
