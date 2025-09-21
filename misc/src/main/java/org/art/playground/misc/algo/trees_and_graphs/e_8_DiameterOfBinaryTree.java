@@ -1,4 +1,4 @@
-package org.art.playground.misc.algo.trees;
+package org.art.playground.misc.algo.trees_and_graphs;
 
 import org.art.playground.misc.algo.utils.BinaryTreeNode;
 import org.junit.jupiter.api.Test;
