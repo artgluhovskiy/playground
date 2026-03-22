@@ -27,7 +27,6 @@ public class m_11_PacificAtlanticWaterFlow {
 
     private static final byte PACIFIC = 1;
     private static final byte ATLANTIC = 2;
-    private static final byte BOTH = 3;
 
     private static final List<int[]> DIRECTIONS = List.of(
         new int[]{0, 1}, new int[]{0, -1},
@@ -40,80 +39,55 @@ public class m_11_PacificAtlanticWaterFlow {
 
         byte[][] visited = new byte[rows][cols];
 
-        // Row 0 (all Pacific)
-        for (int i = 0; i < cols; i++) {
-            bfs(0, i, heights, visited, PACIFIC);
-        }
+        Deque<int[]> queue = new ArrayDeque<>();
 
-        // Col 0 (all Pacific)
         for (int i = 0; i < rows; i++) {
-            bfs(i, 0, heights, visited, PACIFIC);
+            visited[i][0] |= PACIFIC;
+            queue.addLast(new int[]{i, 0});
         }
-
-        // Row last (all Atlantic)
-        for (int i = 0; i < cols; i++) {
-            bfs(rows - 1, i, heights, visited, ATLANTIC);
+        for (int j = 1; j < cols; j++) {
+            visited[0][j] |= PACIFIC;
+            queue.addLast(new int[]{0, j});
         }
+        bfs(queue, heights, visited, PACIFIC);
 
-        // Col last (all Atlantic)
         for (int i = 0; i < rows; i++) {
-            bfs(i, cols - 1, heights, visited, ATLANTIC);
+            visited[i][cols - 1] |= ATLANTIC;
+            queue.addLast(new int[]{i, cols - 1});
         }
+        for (int j = 0; j < cols - 1; j++) {
+            visited[rows - 1][j] |= ATLANTIC;
+            queue.addLast(new int[]{rows - 1, j});
+        }
+        bfs(queue, heights, visited, ATLANTIC);
 
         List<List<Integer>> result = new ArrayList<>();
-
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if (visited[i][j] == BOTH) {
+                if (visited[i][j] == (ATLANTIC | PACIFIC)) {
                     result.add(List.of(i, j));
                 }
             }
         }
-
         return result;
     }
 
-    private void bfs(int r, int c, int[][] heights, byte[][] visited, byte type) {
-        // Check if the cell is already visited
-        byte visitedCell = visited[r][c];
-        if (visitedCell == type || visitedCell == BOTH) {
-            return;
-        }
-
-        Deque<int[]> queue = new ArrayDeque<>();
-        queue.addLast(new int[]{r, c});
-
+    private void bfs(Deque<int[]> queue, int[][] heights, byte[][] visited, byte type) {
         while (!queue.isEmpty()) {
-
             int[] current = queue.pollFirst();
-            int currentR = current[0];
-            int currentC = current[1];
+            int r = current[0];
+            int c = current[1];
 
-            // Visit cell
-            if (visited[currentR][currentC] != 0) {
-                if ((type == PACIFIC && visited[currentR][currentC] == ATLANTIC)
-                    || (type == ATLANTIC && visited[currentR][currentC] == PACIFIC)) {
+            for (int[] dir : DIRECTIONS) {
+                int nr = r + dir[0];
+                int nc = c + dir[1];
 
-                    visited[currentR][currentC] = BOTH;
-                }
-            } else {
-                visited[currentR][currentC] = type;
-            }
+                if (nr >= 0 && nr < heights.length && nc >= 0 && nc < heights[0].length
+                    && (visited[nr][nc] & type) == 0
+                    && heights[nr][nc] >= heights[r][c]) {
 
-            // Explore adjacent cells
-            for (int[] direction : DIRECTIONS) {
-                int newR = currentR + direction[0];
-                int newC = currentC + direction[1];
-
-                if (newR < 0 || newR >= heights.length || newC < 0 || newC >= heights[0].length) {
-                    continue;
-                }
-
-                if ((heights[currentR][currentC] <= heights[newR][newC])
-                    && visited[newR][newC] != type
-                    && visited[newR][newC] != BOTH) {
-
-                    queue.addLast(new int[]{newR, newC});
+                    visited[nr][nc] |= type;
+                    queue.addLast(new int[]{nr, nc});
                 }
             }
         }
