@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * <p>
  * The overall run time complexity should be O(log (m+n)).
  */
-public class h_1_MedianOfTwoSortedArrays {
+public class h_2_MedianOfTwoSortedArrays {
 
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         if (nums2.length < nums1.length) {

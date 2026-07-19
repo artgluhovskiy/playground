@@ -17,7 +17,6 @@ public class m_1_LongestRepeatingCharacterReplacement {
         int[] freqs = new int['Z' - 'A' + 1];
 
         int left = 0;
-        int right = 0;
         int maxFreq = 0;
         int windowSize = 1;
         int maxWindowSize = 1;
@@ -28,13 +27,11 @@ public class m_1_LongestRepeatingCharacterReplacement {
             freqs['Z' - c] = frequency;
 
             if (windowSize - maxFreq <= k) {
-                right++;
                 maxWindowSize = Math.max(windowSize, maxWindowSize);
                 windowSize++;
             } else {
                 freqs['Z' - s.charAt(left)] -= 1;
                 left++;
-                right++;
             }
         }
 
